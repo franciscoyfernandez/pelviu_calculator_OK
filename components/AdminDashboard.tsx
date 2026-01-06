@@ -33,7 +33,7 @@ const KpiCard = ({ label, value, icon, highlight, sub }: { label: string; value:
     </div>
 );
 
-const BarMetric = ({ label, value, total, color }: { label: string; value: number; total: number; color: string }) => {
+const BarMetric: React.FC<{ label: string; value: number; total: number; color: string }> = ({ label, value, total, color }) => {
     const pct = total > 0 ? ((value / total) * 100).toFixed(0) : 0;
     return (
         <div>
@@ -161,7 +161,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        if (pin === '1234') setIsAuthenticated(true);
+        if (pin === 'Andorra2025') setIsAuthenticated(true);
         else alert('PIN Incorrecto');
     };
 
@@ -255,7 +255,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
                                 <ul className="space-y-2">
                                     {(() => {
                                         const allSymptoms = { ...stats.symptoms.mujer, ...stats.symptoms.hombre };
-                                        const sorted = Object.entries(allSymptoms).sort(([, a], [, b]) => b - a).slice(0, 3);
+                                        const sorted = Object.entries(allSymptoms).sort(([, a], [, b]) => (b as number) - (a as number)).slice(0, 3);
                                         if (sorted.length === 0) return <li className="text-white/50 italic">Sin suficientes datos de síntomas severos.</li>;
                                         return sorted.map(([name, count]) => (
                                             <li key={name} className="flex items-center gap-2">
@@ -300,7 +300,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
                         <h3 className="font-bold text-gray-800 mb-6">Tratamientos Recomendados (Global)</h3>
                         <div className="space-y-4">
                             {Object.entries(stats.byTreatment).map(([name, count]) => (
-                                <BarMetric key={name} label={name} value={count} total={stats.total} color="bg-[#EE8866]" />
+                                <BarMetric key={name} label={name} value={count as number} total={stats.total} color="bg-[#EE8866]" />
                             ))}
                         </div>
                     </div>
@@ -315,7 +315,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
                             <div className="space-y-3">
                                 {Object.entries(stats.genderTreatment.mujer).length === 0 && <p className="text-sm text-gray-400 italic">Sin datos</p>}
                                 {Object.entries(stats.genderTreatment.mujer).map(([t, c]) => (
-                                    <BarMetric key={t} label={t} value={c} total={stats.byGender.mujer || 0} color="bg-rose-400" />
+                                    <BarMetric key={t} label={t} value={c as number} total={stats.byGender.mujer || 0} color="bg-rose-400" />
                                 ))}
                             </div>
                         </div>
@@ -324,7 +324,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
                             <div className="space-y-3">
                                 {Object.entries(stats.genderTreatment.hombre).length === 0 && <p className="text-sm text-gray-400 italic">Sin datos</p>}
                                 {Object.entries(stats.genderTreatment.hombre).map(([t, c]) => (
-                                    <BarMetric key={t} label={t} value={c} total={stats.byGender.hombre || 0} color="bg-blue-500" />
+                                    <BarMetric key={t} label={t} value={c as number} total={stats.byGender.hombre || 0} color="bg-blue-500" />
                                 ))}
                             </div>
                         </div>
@@ -340,9 +340,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
                             <div className="space-y-3">
                                 {Object.entries(stats.symptoms.mujer).length === 0 && <p className="text-sm text-gray-400 italic">Sin síntomas severos registrados</p>}
                                 {Object.entries(stats.symptoms.mujer)
-                                    .sort(([, a], [, b]) => b - a)
+                                    .sort(([, a], [, b]) => (b as number) - (a as number))
                                     .map(([s, c]) => (
-                                        <BarMetric key={s} label={s} value={c} total={stats.byGender.mujer || 0} color="bg-rose-300" />
+                                        <BarMetric key={s} label={s} value={c as number} total={stats.byGender.mujer || 0} color="bg-rose-300" />
                                     ))}
                             </div>
                         </div>
@@ -351,9 +351,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
                             <div className="space-y-3">
                                 {Object.entries(stats.symptoms.hombre).length === 0 && <p className="text-sm text-gray-400 italic">Sin síntomas severos registrados</p>}
                                 {Object.entries(stats.symptoms.hombre)
-                                    .sort(([, a], [, b]) => b - a)
+                                    .sort(([, a], [, b]) => (b as number) - (a as number))
                                     .map(([s, c]) => (
-                                        <BarMetric key={s} label={s} value={c} total={stats.byGender.hombre || 0} color="bg-blue-400" />
+                                        <BarMetric key={s} label={s} value={c as number} total={stats.byGender.hombre || 0} color="bg-blue-400" />
                                     ))}
                             </div>
                         </div>
