@@ -9,9 +9,10 @@ import BookingModal from './BookingModal';
 interface ResultsProps {
   result: AssessmentResult;
   onRestart: () => void;
+  assessmentId?: string | null;
 }
 
-const Results: React.FC<ResultsProps> = ({ result, onRestart }) => {
+const Results: React.FC<ResultsProps> = ({ result, onRestart, assessmentId }) => {
   const { score, recommendation, treatment } = result;
   const [expertAnalysis, setExpertAnalysis] = useState<string>("");
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(true);
@@ -293,6 +294,7 @@ const Results: React.FC<ResultsProps> = ({ result, onRestart }) => {
         isOpen={isBookingModalOpen}
         onClose={() => setIsBookingModalOpen(false)}
         treatment={treatment}
+        assessmentId={assessmentId}
       />
     </motion.div>
   );
